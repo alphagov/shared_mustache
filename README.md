@@ -1,31 +1,46 @@
 # SharedMustache
 
-Add the ability to use mustache templates in Rails. They should be compiled
-using hogan and injected into the Rails pipeline for production. While being
-rendered in script blocks for development.
+Add the ability to share [mustache][mustache] templates in Rails and
+JavaScript. They will be compiled using [hogan][hogan] for production and
+then compiled into your JavaScript using the asset-pipeline.
+
+In development they will be rendered into script blocks on the page.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add 'shared_mustache' to your your application's Gemfile.
 
-    gem 'mustached_rails'
+By default when you run `rake shared_mustache:compile` it will put the outputed
+templates JavaScript at `Rails.root/app/assets/javascript/templates.js`. This
+can be configured using an intializer.
 
-And then execute:
+You should add the following lines to your `application.js`:
 
-    $ bundle
+    //= require shared_mustache
+    //= require templates
 
-Or install it yourself as:
+At the bottom of your main layout you should add:
 
-    $ gem install mustached_rails
+    <%= render_mustache_templates if Rails.env.development? %>
+
+Add `rake shared_mustache:compile` before the `assets:precompile` step of your
+deploy script.
 
 ## Usage
 
-TODO: Write usage instructions here
+Create mustache templates as you would erb partials. So for example at
+`app/views/home/_row.mustache`. You can then render it in an `erb` template
+using:
 
-## Contributing
+    <%= render_mustache('home/row', context) %>
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+It tries to use the same conventions as the native render methods. Such that
+you can ommit the controller if the mustache is in the same folder as the
+currently executing controller.
+
+In your JavaScript you should get access to jQuery methods to interact with the
+mustache templates:
+
+    $.mustache('home/_row', context);
+
+
