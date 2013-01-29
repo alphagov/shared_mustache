@@ -26,6 +26,8 @@ At the bottom of your main layout you should add:
 Add `rake shared_mustache:compile` before the `assets:precompile` step of your
 deploy script.
 
+Currently it expects your views to be found under `app/views`.
+
 ## Usage
 
 Create mustache templates as you would erb partials. So for example at

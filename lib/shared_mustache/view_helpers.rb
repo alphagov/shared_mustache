@@ -15,7 +15,7 @@ module SharedMustache
     def render_mustache(template, options={})
       view = Mustache.new
       view.template = File.read(SharedMustache.find_template_path(template, params[:controller]))
-      view.render(options)
+      view.render(options).html_safe
     end
   end
 end
