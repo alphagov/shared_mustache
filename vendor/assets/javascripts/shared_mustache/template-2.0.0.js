@@ -13,7 +13,9 @@
  *  limitations under the License.
  */
 
-var Hogan = {};
+if(typeof window.Hogan === 'undefined'){
+  window.Hogan = {};
+}
 
 (function (Hogan, useArrayBuffer) {
   Hogan.Template = function (renderFunc, text, compiler, options) {
