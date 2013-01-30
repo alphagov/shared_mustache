@@ -17,4 +17,9 @@ namespace :shared_mustache do
 
     File.open(SharedMustache::Config.template_file, 'w') { |f| f.write javascript.join("\n") }
   end
+
+  desc 'Cleans up the mustache template file used in production'
+  task :clean do
+    File.open(SharedMustache::Config.template_file, 'w') {}
+  end
 end
