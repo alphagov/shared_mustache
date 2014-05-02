@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = ""
 
   gem.add_dependency 'mustache', '~> 0.99.4'
-  gem.add_dependency 'execjs', '~> 1.2.4'
+  gem.add_dependency 'execjs', '>= 1.2.4'
 
   gem.add_development_dependency "gem_publisher", "~> 1.1.1"
 
