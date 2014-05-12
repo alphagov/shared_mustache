@@ -90,7 +90,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 });
             }
             else if (window.templates) {
-                for(template in templates){
+                for(templateName in templates){
                     cache[templateName] = templates[templateName];
                 }
             }
