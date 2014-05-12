@@ -29,15 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*
  * mustache-loader.js - Mustache template loader to go with flask-mustache
  *
- * This depends on jQuery, and either:
- * - Twitter's Hogan.js:  https://github.com/twitter/hogan.js or
- * - Mustache.js:         https://github.com/janl/mustache.js
+ * This depends on jQuery, and Twitter's Hogan.js
+ * https://github.com/twitter/hogan.js or
  *
  * Usage:
  *
  *   $('#target').mustache('includes/_user.mustache', {user_name:'Jan'});
  *   var html = $.mustache('includes/_user.mustache', {user_name:'Jan'});
- *   $.mustacheAsFunction('includes/_user.mustache')({user_name:'Jan'});
  */
 
 /*jslint
@@ -71,7 +69,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 cache[templateName] = $('<div />').html(
                     $(document.getElementById(templateName)).html().trim()).text();
             }
-            else if (templates[templateName]){
+            else if (window.templates && templates[templateName]){
                 cache[templateName] = templates[templateName];
             }
         }
@@ -92,7 +90,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 });
             }
         }
-        else {
+        else if (window.templates) {
             for(template in templates){
                 cache[templateName] = templates[templateName];
             }
@@ -100,33 +98,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     };
 
 
-    var compile = function(templateName) {
-        // returns a compiled template.
-        // only works with Hogan.js or if templates pre-compiled.
-        var templateContent = load(templateName),
-            template = null;
-
-        if (typeof templateContent === 'string' && window.Hogan) {
-            template = cache[templateName] = window.Hogan.compile(templateContent);
-        }
-        if (template === null) {
-            $.error("Couldn't compile template " + templateName);
-        }
-        return template;
-    };
-
-    var renderFunction = function(templateName) {
-        // returns a wrapped `render` function
-        // only works with Hogan.js or if templates pre-compiled.
-        var template = compile(templateName);
-
-        return function(context) {
-            return template.render(context);
-        };
-    };
-
     var render = function(templateName, context) {
-
         // first we need to try and load the template and partials
         loadPartials();
         var template = load(templateName);
@@ -137,7 +109,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         // pre-compiled hogan templates are objects
         else if (typeof template === 'object') {
             // template has been pre-compiled, just render and return it
-            return template.render(context);
+            return template.render(context, cache);
         }
 
         // template hasn't been pre-compiled yet
@@ -146,12 +118,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             return window.Hogan.compile(template).render(context, cache);
         }
 
-        if (window.Mustache) {
-            return window.Mustache.render(template, context);
-        }
-
-        // we don't have Hogan or Mustache, so we need to bail
-        $.error('Must have either Hogan.js or Mustache.js to load string templates');
+        // we don't have Hogan so we need to bail
+        $.error('Must have Hogan.js to load string templates');
     };
 
     $.fn.mustache = function(templateName, context) {
@@ -166,12 +134,4 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
         return render(templateName, context);
     };
-
-    $.mustacheAsFunction = function(templateName) {
-        // returns a function that can be used to render the
-        // mustache template
-
-        return renderFunction(templateName);
-    };
-
 }(jQuery));
