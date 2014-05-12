@@ -81,7 +81,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         var templateName;
 
         if (partialsLoaded === false){
-            if(typeof templates === "undefined"){
+            if(typeof window.templates === "undefined"){
                 $('script[type="text/mustache"]').each(function(i, el){
                     templateName = $(el).attr('id');
                     // stupid hack to turn HTML-encoded templates into strings, see:
@@ -89,10 +89,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     cache[templateName] = $('<div />').html($(el).html().trim()).text();
                 });
             }
-        }
-        else if (window.templates) {
-            for(template in templates){
-                cache[templateName] = templates[templateName];
+            else if (window.templates) {
+                for(template in templates){
+                    cache[templateName] = templates[templateName];
+                }
             }
         }
     };
