@@ -13,7 +13,7 @@ module SharedMustache
   end
 
   def self.file_name_to_id(filename)
-    filename.gsub('.mustache', '').gsub("#{view_dir}/", '').gsub('/', '-')
+    filename.gsub('.mustache', '').gsub("#{view_dir}/", '')
   end
 
   def self.find_template_path(filename, controller)

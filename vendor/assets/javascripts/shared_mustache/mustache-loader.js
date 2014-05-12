@@ -59,10 +59,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         // this function takes names like: "includes/_user.mustache"
         // and loads them from somewhere else.
 
-        // first we need to convert slashes to hyphens, since
-        // they're DOM valid
-        templateName = templateName.replace('/', '-');
-
         // they can be cached as functions, or as strings.
         // Strings are template content.
         if (typeof cache[templateName] === 'undefined') {
