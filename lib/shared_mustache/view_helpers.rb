@@ -1,4 +1,4 @@
-require 'mustache'
+require 'shared_mustache/mustache_view'
 
 module SharedMustache
   module ViewHelpers
@@ -13,8 +13,9 @@ module SharedMustache
     end
 
     def render_mustache(template, options={})
-      view = Mustache.new
-      view.template = File.read(SharedMustache.find_template_path(template, params[:controller]))
+      view = MustacheView.new
+      view.template_name = SharedMustache.find_template_path(template, params[:controller])
+      view.template_path = SharedMustache.view_dir
       view.render(options).html_safe
     end
   end

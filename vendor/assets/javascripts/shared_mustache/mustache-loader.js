@@ -55,6 +55,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     // this is a cached lookup table of templates
     var cache = {};
 
+    // only load partials once
+    var partialsLoaded = false;
+
     var load = function(templateName) {
         // this function takes names like: "includes/_user.mustache"
         // and loads them from somewhere else.
@@ -75,6 +78,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
         return cache[templateName];
     };
+
+    var loadPartials = function() {
+        var templateName;
+
+        if (partialsLoaded === false){
+            if(typeof templates === "undefined"){
+                $('script[type="text/mustache"]').each(function(i, el){
+                    templateName = $(el).attr('id');
+                    // stupid hack to turn HTML-encoded templates into strings, see:
+                    // http://stackoverflow.com/a/2419664/61435
+                    cache[templateName] = $('<div />').html($(el).html().trim()).text();
+                });
+            }
+        }
+        else {
+            for(template in templates){
+                cache[templateName] = templates[templateName];
+            }
+        }
+    };
+
 
     var compile = function(templateName) {
         // returns a compiled template.
@@ -103,7 +127,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     var render = function(templateName, context) {
 
-        // first we need to try and load the template
+        // first we need to try and load the template and partials
+        loadPartials();
         var template = load(templateName);
 
         if (typeof template === 'undefined') {
@@ -118,7 +143,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         // template hasn't been pre-compiled yet
         // so we need to do other things
         if (window.Hogan) {
-            return window.Hogan.compile(template).render(context);
+            return window.Hogan.compile(template).render(context, cache);
         }
 
         if (window.Mustache) {

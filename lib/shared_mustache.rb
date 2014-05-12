@@ -21,7 +21,6 @@ module SharedMustache
     if directory == '.'
       directory = controller
     end
-
-    File.join(view_dir, directory, "_#{File.basename(filename)}.mustache")
+    File.join(directory, "_#{File.basename(filename)}")
   end
 end
