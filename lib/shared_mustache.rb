@@ -9,7 +9,7 @@ module SharedMustache
   end
 
   def self.file_list
-    Dir[File.join(view_dir, '**', '*.mustache')]
+    Dir[File.join(view_dir, '**', '*.mustache')].sort
   end
 
   def self.file_name_to_id(filename)
