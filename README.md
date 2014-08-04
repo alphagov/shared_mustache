@@ -1,10 +1,15 @@
 # SharedMustache
 
 Add the ability to share [mustache][mustache] templates in Rails and
-JavaScript. They will be compiled using [hogan][hogan] for production and
-then compiled into your JavaScript using the asset-pipeline.
+JavaScript.
 
-In development they will be rendered into script blocks on the page.
+Mustache templates will be rendered using Ruby mustache on the server.
+
+On the client there is a jQuery helper to let you use the template. In
+development the templates are outputted on the page in script blocks. For
+production the templates are compiled using [hogan.js][hogan], the compiled
+templates can then be included into your standard JavaScript file using the
+asset-pipeline.
 
 ## Installation
 
@@ -12,12 +17,16 @@ Add 'shared_mustache' to your your application's Gemfile.
 
 By default when you run `rake shared_mustache:compile` it will put the outputed
 templates JavaScript at `Rails.root/app/assets/javascript/templates.js`. This
-can be configured using an intializer.
+can be configured using an intializer. The `templates.js` file should be kept
+empty for development and only populated in production.
 
 You should add the following lines to your `application.js`:
 
     //= require shared_mustache
     //= require templates
+
+This adds the jQuery helper for you to use the templates and in production will
+add the compiled templates.
 
 At the bottom of your main layout you should add:
 
@@ -46,3 +55,5 @@ mustache templates:
     $.mustache('home/_row', context);
 
 
+[mustache]: http://mustache.github.io/
+[hogan]: http://twitter.github.io/hogan.js/
