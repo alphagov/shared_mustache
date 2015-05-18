@@ -1,3 +1,9 @@
+/* Modified to remove `typeof exports` check on final line.
+ * Sometimes the `exports` global variable is present through a quirk of dynamically
+ * generated heading IDs which the browser makes accessible through the window namespace.
+ * eg <h2 id="exports">Exports</h2> becomes `window.exports` and typeof exports is no
+ * longer undefined. */
+
 /*
  *  Copyright 2011 Twitter, Inc.
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -239,5 +245,4 @@ if(typeof window.Hogan === 'undefined'){
     return Object.prototype.toString.call(a) === '[object Array]';
   };
 
-})(typeof exports !== 'undefined' ? exports : Hogan);
-
+})(Hogan);
