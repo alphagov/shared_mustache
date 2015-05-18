@@ -13,10 +13,8 @@ module SharedMustache
     end
 
     def self.hogan_source
-      hogan_path = File.expand_path('../../vendor/assets/javascripts/hogan-2.0.0.js', File.dirname(__FILE__))
+      hogan_path = File.expand_path('../../vendor/assets/javascripts/hogan-2.0.0-hotfix.js', File.dirname(__FILE__))
       File.read(hogan_path)
     end
   end
 end
-
-
