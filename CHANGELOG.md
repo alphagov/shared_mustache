@@ -1,3 +1,7 @@
+# 1.0.0
+
+* Bump mustache to 1.0.2. This requires Ruby 2.0 or higher.
+
 # 0.2.1
 
 * Remove `typeof exports` check in Hogan libraries: https://github.com/alphagov/shared_mustache/pull/8.
