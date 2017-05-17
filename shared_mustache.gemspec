@@ -15,8 +15,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'mustache', '~> 1.0.2'
   gem.add_dependency 'execjs', '>= 1.2.4'
 
-  gem.add_development_dependency "gem_publisher", "~> 1.1.1"
-
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
