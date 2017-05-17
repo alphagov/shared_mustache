@@ -11,7 +11,7 @@ module SharedMustache
       )
     end
     rake_tasks do
-      Dir[File.expand_path('../tasks/*.rake', File.dirname(__FILE__))].each { |f| load f }
+      load 'tasks/shared_mustache.rake'
     end
   end
 end
