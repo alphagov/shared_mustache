@@ -1,3 +1,7 @@
+# 1.0.1
+
+* Add hogan.js to assets.precompile for compatibility with sprockets-rails 3.x
+
 # 1.0.0
 
 * Bump mustache to 1.0.2. This requires Ruby 2.0 or higher.
